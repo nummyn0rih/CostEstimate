@@ -25,9 +25,6 @@ public class Frame {
         JPanel activeFields = new JPanel();
         activeFields.setBackground(Color.orange);
 
-        //JTextField textField = new JTextField("Privet");
-        //activeFields.add(textField);
-
 /*        JTextField nameSale = new JTextField("Наименование товара", 45);
         nameSale.addActionListener(new WriteNameSaleListener());
         activeFields.add(nameSale);
