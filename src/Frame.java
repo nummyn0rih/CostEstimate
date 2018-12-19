@@ -5,120 +5,126 @@ import java.awt.event.ActionEvent;
 
 public class Frame {
 
-    //JFrame frame;
-    //JPanel passiveFields;
-    //JPanel activeFields;
-    //JPanel north = new JPanel();
+    JFrame frame;
+    JPanel passiveFields;
+    JPanel activeFields;
+    JPanel background;
     //JPanel south;
     //JPanel center = new JPanel();
+    public static void main(String[] args) {
+        Frame gui = new Frame();
+        gui.buildGUI();
+    }
 
-    public void setFrame() {
+    public void buildGUI() {
 
-        JFrame frame = new JFrame("Расчет маржинальной прибыли");
+        frame = new JFrame("Расчет маржинальной прибыли");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 400);
-        frame.setVisible(true);
-        BorderLayout layout = new BorderLayout();
-        JPanel background =  new JPanel(layout);
+
+        background = new JPanel();
+        background.setLayout(new BorderLayout());
+        frame.getContentPane().add(BorderLayout.CENTER, background);
+
+        JButton jb = new JButton("465");
+        background.add(jb);
         background.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        JPanel activeFields = new JPanel();
+        // Конфигурация левой активной зоны
+        activeFields = new JPanel();
         activeFields.setBackground(Color.orange);
+        activeFields.setLayout(new BoxLayout(activeFields, BoxLayout.Y_AXIS));
+        activeFields.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-/*        JTextField nameSale = new JTextField("Наименование товара", 45);
+        JTextField nameSale = new JTextField("Наименование товара");
         nameSale.addActionListener(new WriteNameSaleListener());
         activeFields.add(nameSale);
 
-        JTextField number = new JTextField("Количество", 5);
+        JTextField number = new JTextField("Количество");
         number.addActionListener(new NumberListener());
         activeFields.add(number);
 
-        JTextField costOfVAT = new JTextField("Себестоимость с НДС", 25);
+        JTextField costOfVAT = new JTextField("Себестоимость с НДС");
         costOfVAT.addActionListener(new CostOfVATListener());
         activeFields.add(costOfVAT);
 
-        JTextField costWithoutVAT = new JTextField("Себестоимость без НДС", 25);
+        JTextField costWithoutVAT = new JTextField("Себестоимость без НДС");
         costWithoutVAT.addActionListener(new CostWithoutVATListener());
         activeFields.add(costWithoutVAT);
 
-        JTextField costSaleOfVAT = new JTextField("Стоимость продажи с НДС", 25);
+        JTextField costSaleOfVAT = new JTextField("Стоимость продажи с НДС");
         costSaleOfVAT.addActionListener(new CostSaleOfVATListener());
         activeFields.add(costSaleOfVAT);
 
-        JTextField netMargin = new JTextField("Чистая маржа", 25);
+        JTextField netMargin = new JTextField("Чистая маржа");
         netMargin.addActionListener(new NetMargListener());
         activeFields.add(netMargin);
 
-        JTextField delivery = new JTextField("Доставка", 25);
+        JTextField delivery = new JTextField("Доставка");
         delivery.addActionListener(new DeliveryListener());
         activeFields.add(delivery);
 
-        JTextField installation = new JTextField("Сборка", 25);
+        JTextField installation = new JTextField("Сборка");
         installation.addActionListener(new InstallationListener());
         activeFields.add(installation);
 
-        JTextField addExpenses = new JTextField("Дополнительные расходы", 25);
+        JTextField addExpenses = new JTextField("Дополнительные расходы");
         addExpenses.addActionListener(new AddExpensesListener());
         activeFields.add(addExpenses);
 
-        JTextField delay = new JTextField("Отрочка", 25);
+        JTextField delay = new JTextField("Отрочка");
         delay.addActionListener(new DelayListener());
         activeFields.add(delay);
-*/
-        background.add(BorderLayout.WEST, activeFields);
 
-        JPanel passiveFields = new JPanel(layout);
+        frame.getContentPane().add(BorderLayout.WEST, activeFields);
+
+        // Конфигурация правой неактивной зоны
+        passiveFields = new JPanel();
         passiveFields.setBackground(Color.cyan);
+        passiveFields.setLayout(new BoxLayout(passiveFields, BoxLayout.Y_AXIS));
+        passiveFields.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        background.add(BorderLayout.EAST, passiveFields);
-
-        frame.getContentPane().add(background);
-
-/*        String costSaleWVAT = " ";
-        Label costSaleWithoutVAT = new Label(costSaleWVAT);
+        String costSaleWVAT = "Стоимость продажи без НДС";
+        JLabel costSaleWithoutVAT = new JLabel(costSaleWVAT);
         passiveFields.add(costSaleWithoutVAT);
 
-        String grossProfitWVAT = " ";
-        Label grossProfitWithoutVAT = new Label(grossProfitWVAT);
+        String grossProfitWVAT = "Вал без НДС";
+        JLabel grossProfitWithoutVAT = new JLabel(grossProfitWVAT);
         passiveFields.add(grossProfitWithoutVAT);
 
-        String interestR = " ";
-        Label interestRate = new Label(interestR);
+        String interestR = "Процентная ставка";
+        JLabel interestRate = new JLabel(interestR);
         passiveFields.add(interestRate);
 
-        String netMarginWVAT = " ";
-        Label netMarginWithoutVAT = new Label(netMarginWVAT);
+        String netMarginWVAT = "Маржинальный доход без НДС";
+        JLabel netMarginWithoutVAT = new JLabel(netMarginWVAT);
         passiveFields.add(netMarginWithoutVAT);
 
-        String variableC = " ";
-        Label variableCosts = new Label(variableC);
+        String variableC = "Переменные затраты";
+        JLabel variableCosts = new JLabel(variableC);
         passiveFields.add(variableCosts);
 
-        //String costSaleWVAT = " ";
-        //Label costSaleWithoutVAT = new Label(costSaleWVAT);
-        //passiveFields.add(costSaleWithoutVAT);
+        String bonus = "Премия менеджеру";
+        JLabel bonusManager = new JLabel(bonus);
+        passiveFields.add(bonusManager);
 
-        String profitabilityWVAT = " ";
-        Label profitabilityWithoutVAT = new Label(profitabilityWVAT);
+        String profitabilityWVAT = "Рентабельность без НДС";
+        JLabel profitabilityWithoutVAT = new JLabel(profitabilityWVAT);
         passiveFields.add(profitabilityWithoutVAT);
 
-        //String сostSaleWithoutVAT = " ";
-        //Label сostSaleWithoutVAT = new Label(сostSaleWithoutVAT);
-        //passiveFields.add(costSaleWithoutVAT);
-        
-        frame.getContentPane().add(BorderLayout.EAST, passiveFields);
-        //frame.getContentPane().add(BorderLayout.NORTH, north);
-        frame.getContentPane().add(BorderLayout.SOUTH, south);
-        //frame.getContentPane().add(BorderLayout.CENTER, center);
+        String markup = " ";
+        JLabel markupP = new JLabel(markup);
+        passiveFields.add(markupP);
 
-        //north.setBackground(Color.black);
-        south.setBackground(Color.green);
-        //center.setBackground(Color.orange);
+        frame.getContentPane().add(BorderLayout.EAST, passiveFields);
 
         JButton buttonToCalculate = new JButton("Рассчитать");
         buttonToCalculate.addActionListener(new ButtonToCalculate());
-        south.add(buttonToCalculate);
-*/
+        passiveFields.add(buttonToCalculate);
+
+        frame.setSize(800, 400);
+        frame.setVisible(true);
+        frame.pack();
+
     }
 
     public class WriteNameSaleListener implements ActionListener {
@@ -181,15 +187,9 @@ public class Frame {
         }
     }
 
-
-
-
-
-
-
     public class ButtonToCalculate implements ActionListener {
         public void actionPerformed(ActionEvent a) {
-            System.out.println("ButtonToCalculate");
+            System.out.println();
         }
     }
 
