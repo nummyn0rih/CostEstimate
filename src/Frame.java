@@ -11,6 +11,7 @@ public class Frame {
     JPanel background;
     //JPanel south;
     //JPanel center = new JPanel();
+
     public static void main(String[] args) {
         Frame gui = new Frame();
         gui.buildGUI();
@@ -38,6 +39,7 @@ public class Frame {
         JTextField nameSale = new JTextField("Наименование товара");
         nameSale.addActionListener(new WriteNameSaleListener());
         activeFields.add(nameSale);
+        nameSale.setActionCommand("nameSale");
 
         JTextField number = new JTextField("Количество");
         number.addActionListener(new NumberListener());
@@ -124,17 +126,27 @@ public class Frame {
         frame.setSize(800, 400);
         frame.setVisible(true);
         frame.pack();
-
     }
 
-    public class WriteNameSaleListener implements ActionListener {
+
+    class WriteNameSaleListener implements ActionListener {
         public void actionPerformed(ActionEvent a) {
-            System.out.println("WriteNameSaleListener");
+
+            //activeFields.
+            //if (a.getSource() == nameSale) {
+            //    String data = txtdata.getText(); //perform your operation
+            //    System.out.println(data);
+            //}
+            String textFieldValue = a.getActionCommand();
+            if (actionCommand.equals("Your   actionCommand for press Enter")) {}
+            //System.out.println(textFieldValue);
         }
     }
 
+
     public class NumberListener implements ActionListener {
         public void actionPerformed(ActionEvent a) {
+
             System.out.println("NumberListener");
         }
     }
@@ -189,8 +201,12 @@ public class Frame {
 
     public class ButtonToCalculate implements ActionListener {
         public void actionPerformed(ActionEvent a) {
-            System.out.println();
+            System.out.println("go go go");
         }
+    }
+
+    public void calculate() {
+
     }
 
 
