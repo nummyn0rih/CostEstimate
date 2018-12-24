@@ -2,7 +2,7 @@ public class CostEstimate {
 
     public static void main(String[] args) {
 
-        Frame gui = new Frame();
+        MyFrame gui = new MyFrame();
         gui.buildGUI();
     }
 }
