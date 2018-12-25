@@ -6,12 +6,12 @@ import java.awt.event.ActionEvent;
 public class MyFrame {
 
     private JFrame frame;
-    private JPanel nameField, annotationsAFields, activeFields, annotationsPFields, passiveFields;
+    private JPanel nameField, activeFields, passiveFields;
     private JPanel background;
     private JTextField nameSale, number, costOfVAT, costWithoutVAT, costSaleOfVAT,
             netMargin, delivery, installation, addExpenses, delay;
-    private JLabel costSaleWithoutVAT, grossProfitWithoutVAT, interestRate, netMarginWithoutVAT,
-            variableCosts, bonusManager, profitabilityWithoutVAT, markupP;
+    private JTextField costSaleWithoutVAT, grossProfitWithoutVAT, netMarginWithoutVAT,
+            variableCosts, bonusManager, profitabilityWithoutVAT, markupP, interestRateSumm, interestRateDay;
 
     public static void main(String[] args) {
         MyFrame gui = new MyFrame();
@@ -27,10 +27,10 @@ public class MyFrame {
         background.setLayout(new BorderLayout());
         frame.getContentPane().add(BorderLayout.CENTER, background);
 
-        //Конфигурация панели NORTH nameField
+        // Конфигурация панели NORTH nameField
         nameField = new JPanel();
         nameField.setLayout(new FlowLayout());
-        nameSale = new JTextField("", 15);
+        nameSale = new JTextField("", 25);
         nameSale.addActionListener(new WriteNameSaleListener());
         nameField.add(nameSale);
         JLabel jl0 = new JLabel("Наименование товара");
@@ -40,98 +40,107 @@ public class MyFrame {
         nameField.add(buttonToCalculate);
         frame.getContentPane().add(BorderLayout.NORTH, nameField);
 
-        //Конфигурация панели CENTER annotationsAFields
-        annotationsAFields = new JPanel();
-        annotationsAFields.setLayout(new GridLayout(9, 1));
-        JLabel jl1 = new JLabel("Количество");
-        annotationsAFields.add(jl1);
-        JLabel jl2 = new JLabel("Себестоимость с НДС");
-        annotationsAFields.add(jl2);
-        JLabel jl3 = new JLabel("Себестоимость без НДС");
-        annotationsAFields.add(jl3);
-        JLabel jl4 = new JLabel("Стоимость продажи с НДС");
-        annotationsAFields.add(jl4);
-        JLabel jl5 = new JLabel("Чистая маржа");
-        annotationsAFields.add(jl5);
-        JLabel jl6 = new JLabel("Доставка");
-        annotationsAFields.add(jl6);
-        JLabel jl7 = new JLabel("Сборка");
-        annotationsAFields.add(jl7);
-        JLabel jl8 = new JLabel("Дополнительные затраты");
-        annotationsAFields.add(jl8);
-        JLabel jl9 = new JLabel("Отрочка");
-        annotationsAFields.add(jl9);
-        frame.getContentPane().add(BorderLayout.CENTER, annotationsAFields);
-
         // Конфигурация панели WEST activeFields
         activeFields = new JPanel();
-        //activeFields.setBackground(Color.orange);
-        activeFields.setLayout(new BoxLayout(activeFields, BoxLayout.Y_AXIS));
-        //activeFields.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        activeFields.setLayout(new GridLayout(9, 2));
 
-        number = new JTextField("", 8);
+        number = new JTextField("", 5);
         number.addActionListener(new NumberListener());
         activeFields.add(number);
-
+        JLabel jl1 = new JLabel("Количество");
+        activeFields.add(jl1);
         costOfVAT = new JTextField("");
         costOfVAT.addActionListener(new CostOfVATListener());
         activeFields.add(costOfVAT);
-
+        JLabel jl2 = new JLabel("Себестоимость с НДС");
+        activeFields.add(jl2);
         costWithoutVAT = new JTextField("");
         costWithoutVAT.addActionListener(new CostWithoutVATListener());
         activeFields.add(costWithoutVAT);
-
+        JLabel jl3 = new JLabel("Себестоимость без НДС");
+        activeFields.add(jl3);
         costSaleOfVAT = new JTextField("");
         costSaleOfVAT.addActionListener(new CostSaleOfVATListener());
         activeFields.add(costSaleOfVAT);
-
+        JLabel jl4 = new JLabel("Стоимость продажи с НДС");
+        activeFields.add(jl4);
         netMargin = new JTextField("");
         netMargin.addActionListener(new NetMarginListener());
         activeFields.add(netMargin);
-
+        JLabel jl5 = new JLabel("Чистая маржа");
+        activeFields.add(jl5);
         delivery = new JTextField("");
         delivery.addActionListener(new DeliveryListener());
         activeFields.add(delivery);
-
+        JLabel jl6 = new JLabel("Доставка");
+        activeFields.add(jl6);
         installation = new JTextField("");
         installation.addActionListener(new InstallationListener());
         activeFields.add(installation);
-
+        JLabel jl7 = new JLabel("Сборка");
+        activeFields.add(jl7);
         addExpenses = new JTextField("");
         addExpenses.addActionListener(new AddExpensesListener());
         activeFields.add(addExpenses);
-
+        JLabel jl8 = new JLabel("Дополнительные затраты");
+        activeFields.add(jl8);
         delay = new JTextField("");
         delay.addActionListener(new DelayListener());
+        delay.setEditable(false);
         activeFields.add(delay);
-
+        JLabel jl9 = new JLabel("Отрочка");
+        activeFields.add(jl9);
         frame.getContentPane().add(BorderLayout.WEST, activeFields);
 
-        // Конфигурация панели EAST annotationsPFields
-        annotationsPFields = new JPanel();
-        annotationsPFields.setLayout(new GridLayout(8, 1));
-        costSaleWithoutVAT = new JLabel("Стоимость продажи без НДС: ");
-        annotationsPFields.add(costSaleWithoutVAT);
-        grossProfitWithoutVAT = new JLabel("Вал без НДС: ");
-        annotationsPFields.add(grossProfitWithoutVAT);
-        interestRate = new JLabel("Проценты: ");
-        annotationsPFields.add(interestRate);
-        netMarginWithoutVAT = new JLabel("Маржинальный доход без НДС: ");
-        annotationsPFields.add(netMarginWithoutVAT);
-        variableCosts = new JLabel("Переменные затраты: ");
-        annotationsPFields.add(variableCosts);
-        bonusManager = new JLabel("Премия менеджеру: ");
-        annotationsPFields.add(bonusManager);
-        profitabilityWithoutVAT = new JLabel("Рентабельность без НДС: ");
-        annotationsPFields.add(profitabilityWithoutVAT);
-        markupP = new JLabel("Наценка, %: ");
-        annotationsPFields.add(markupP);
-        frame.getContentPane().add(BorderLayout.EAST, annotationsPFields);
+        // Конфигурация панели EAST passiveFields
+        passiveFields = new JPanel();
+        passiveFields.setLayout(new GridLayout(9, 2));
 
-        //passiveFields = new JPanel();
-        //passiveFields.setBackground(Color.cyan);
-        //passiveFields.setLayout(new BoxLayout(passiveFields, BoxLayout.Y_AXIS));
-        //passiveFields.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        costSaleWithoutVAT = new JTextField("", 5);
+        costSaleWithoutVAT.setEditable(false);
+        passiveFields.add(costSaleWithoutVAT);
+        JLabel jl00 = new JLabel("Стоимость продажи без НДС");
+        passiveFields.add(jl00);
+        grossProfitWithoutVAT = new JTextField();
+        grossProfitWithoutVAT.setEditable(false);
+        passiveFields.add(grossProfitWithoutVAT);
+        JLabel jl01 = new JLabel("Вал без НДС");
+        passiveFields.add(jl01);
+        netMarginWithoutVAT = new JTextField();
+        netMarginWithoutVAT.setEditable(false);
+        passiveFields.add(netMarginWithoutVAT);
+        JLabel jl02 = new JLabel("Маржинальный доход без НДС");
+        passiveFields.add(jl02);
+        variableCosts = new JTextField();
+        variableCosts.setEditable(false);
+        passiveFields.add(variableCosts);
+        JLabel jl03 = new JLabel("Переменные затраты");
+        passiveFields.add(jl03);
+        bonusManager = new JTextField();
+        bonusManager.setEditable(false);
+        passiveFields.add(bonusManager);
+        JLabel jl04 = new JLabel("Премия менеджеру");
+        passiveFields.add(jl04);
+        profitabilityWithoutVAT = new JTextField();
+        profitabilityWithoutVAT.setEditable(false);
+        passiveFields.add(profitabilityWithoutVAT);
+        JLabel jl05 = new JLabel("Рентабельность без НДС");
+        passiveFields.add(jl05);
+        markupP = new JTextField();
+        markupP.setEditable(false);
+        passiveFields.add(markupP);
+        JLabel jl06 = new JLabel("Наценка, %");
+        passiveFields.add(jl06);
+        interestRateSumm = new JTextField("");
+        passiveFields.add(interestRateSumm);
+        JLabel jl07 = new JLabel("Сумма в отсрочку");
+        passiveFields.add(jl07);
+        interestRateDay = new JTextField("");
+        passiveFields.add(interestRateDay);
+        JLabel jl08 = new JLabel("Отсрочка, кол-во дней");
+        passiveFields.add(jl08);
+
+        frame.getContentPane().add(BorderLayout.EAST, passiveFields);
 
         frame.setSize(1500, 400);
         frame.setVisible(true);
@@ -140,72 +149,71 @@ public class MyFrame {
 
     class WriteNameSaleListener implements ActionListener {
         public void actionPerformed(ActionEvent a) {
-            System.out.println(nameSale.getText());
+            calculate();
         }
     }
 
     public class NumberListener implements ActionListener {
         public void actionPerformed(ActionEvent a) {
-
-            System.out.println("NumberListener");
+            calculate();
         }
     }
 
     public class CostOfVATListener implements ActionListener {
         public void actionPerformed(ActionEvent a) {
-            System.out.println("CostOfVATListener");
+            calculate();
         }
     }
 
     public class CostWithoutVATListener implements ActionListener {
         public void actionPerformed(ActionEvent a) {
-            System.out.println("CostWithoutVATListener");
+            calculate();
         }
     }
 
     public class CostSaleOfVATListener implements ActionListener {
         public void actionPerformed(ActionEvent a) {
-            System.out.println("CostSaleOfVATListener");
+            calculate();
         }
     }
 
     public class NetMarginListener implements ActionListener {
         public void actionPerformed(ActionEvent a) {
-            System.out.println("NetMarginListener");
+            calculate();
         }
     }
 
     public class DeliveryListener implements ActionListener {
         public void actionPerformed(ActionEvent a) {
-            System.out.println("DeliveryListener");
+            calculate();
         }
     }
 
     public class InstallationListener implements ActionListener {
         public void actionPerformed(ActionEvent a) {
-            System.out.println("InstallationListener");
+            calculate();
         }
     }
 
     public class AddExpensesListener implements ActionListener {
         public void actionPerformed(ActionEvent a) {
-            System.out.println("AddExpensesListener");
+            calculate();
         }
     }
 
     public class DelayListener implements ActionListener {
         public void actionPerformed(ActionEvent a) {
-            System.out.println("DelayListener");
+            calculate();
         }
     }
 
     public class ButtonToCalculate implements ActionListener {
         public void actionPerformed(ActionEvent a) {
-            System.out.println(calculate());
+            calculate();
         }
     }
 
-    public double calculate() {
+    public boolean calculate() {
         double thisNumber;
         double thisCostOfVAT;
         double thisCostWithoutVAT = 0;
@@ -218,12 +226,13 @@ public class MyFrame {
 
         double thisCostSaleWithoutVAT = 0;
         double thisGrossProfitWithoutVAT = 0;
-        //interestRate;
         double thisNetMarginWithoutVAT = 0;
         double thisVariableCosts;
         double thisBonusManager;
         double thisProfitabilityWithoutVAT;
         double thisMarkupP;
+        double thisInterestRateSumm = 0;
+        double thisInterestRateDay = 0;
 
         // Расчет "Переменные затраты"
         if (installation.getText().equals("")) {
@@ -244,14 +253,25 @@ public class MyFrame {
                 thisAddExpenses = Double.parseDouble(addExpenses.getText());
             }
         }
-        // Нужно дописать ячейку с суммой в отсрочку и использовать ее вместо "Продажа с НДС"
-        if (delay != null) {
-            if (isDouble(delay.getText())) {
-                thisDelay = Double.parseDouble(delay.getText());
+
+        // Расчет "Отсрочка"
+        if (interestRateSumm.getText().equals("")) {
+        } else {
+            if (isDouble(interestRateSumm.getText())) {
+                thisInterestRateSumm = Double.parseDouble(interestRateSumm.getText());
             }
         }
+        if (interestRateDay.getText().equals("")) {
+        } else {
+            if (isDouble(interestRateDay.getText())) {
+                thisInterestRateDay = Double.parseDouble(interestRateDay.getText());
+            }
+        }
+        thisDelay = thisInterestRateSumm * (20.0 / 100.0 / 365.0 * thisInterestRateDay);
+        delay.setText(Double.toString(thisDelay));
+
         thisVariableCosts = thisInstallation + thisDelivery + thisAddExpenses + thisDelay;
-        variableCosts.setText("Переменные затраты: " + thisVariableCosts);
+        variableCosts.setText(Double.toString(thisVariableCosts));
 
         // Проверка "Себестоимость с НДС" на наличие значения,
         // если есть, то расчет "Себестоимость без НДС"
@@ -280,7 +300,7 @@ public class MyFrame {
             if (isDouble(costSaleOfVAT.getText())) {
                 thisCostSaleOfVAT = Double.parseDouble(costSaleOfVAT.getText());
                 thisCostSaleWithoutVAT = thisCostSaleOfVAT  / 1.18;
-                costSaleWithoutVAT.setText("Стоимость продажи без НДС: " + thisCostSaleWithoutVAT);
+                costSaleWithoutVAT.setText(Double.toString(thisCostSaleWithoutVAT));
             }
         }
 
@@ -309,6 +329,7 @@ public class MyFrame {
                 thisCostSaleWithoutVAT = thisNetMargin / .85 +
                         thisCostWithoutVAT + thisVariableCosts;
                 costSaleOfVAT.setText(Double.toString(thisCostSaleOfVAT));
+                costSaleWithoutVAT.setText(Double.toString(thisCostSaleWithoutVAT));
                 // Расчет "Наценка"
                 thisMarkupP = thisNetMargin / thisCostSaleWithoutVAT;
                 markupP.setText(Double.toString(thisMarkupP));
@@ -317,21 +338,21 @@ public class MyFrame {
 
         // Расчет "Вал без НДС"
         thisGrossProfitWithoutVAT = thisCostSaleWithoutVAT - thisCostWithoutVAT;
-        grossProfitWithoutVAT.setText("Вал без НДС: " + thisGrossProfitWithoutVAT);
+        grossProfitWithoutVAT.setText(Double.toString(thisGrossProfitWithoutVAT));
 
         // Расчет "Маржинальный доход без НДС"
         thisNetMarginWithoutVAT = thisGrossProfitWithoutVAT - thisVariableCosts;
-        netMarginWithoutVAT.setText("Маржинальный доход без НДС: " + thisNetMarginWithoutVAT);
+        netMarginWithoutVAT.setText(Double.toString(thisNetMarginWithoutVAT));
 
         // Расчет "Премия менеджера"
         thisBonusManager = thisNetMarginWithoutVAT * 0.15;
-        bonusManager.setText("Премия менеджеру: " + thisBonusManager);
+        bonusManager.setText(Double.toString(thisBonusManager));
 
         // Расчет "Рентабельность без НДС"
         thisProfitabilityWithoutVAT = thisCostSaleWithoutVAT / thisNetMarginWithoutVAT;
         profitabilityWithoutVAT.setText(Double.toString(thisProfitabilityWithoutVAT));
 
-        return 10;
+        return true;
     }
 
     public static boolean isDouble(String s) {
