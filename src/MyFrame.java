@@ -57,9 +57,9 @@ public class MyFrame {
         annotationsAFields.add(jl6);
         JLabel jl7 = new JLabel("Сборка");
         annotationsAFields.add(jl7);
-        JLabel jl8 = new JLabel("Отрочка");
+        JLabel jl8 = new JLabel("Дополнительные затраты");
         annotationsAFields.add(jl8);
-        JLabel jl9 = new JLabel("Стоимость продажи с НДС");
+        JLabel jl9 = new JLabel("Отрочка");
         annotationsAFields.add(jl9);
         frame.getContentPane().add(BorderLayout.CENTER, annotationsAFields);
 
@@ -86,7 +86,7 @@ public class MyFrame {
         activeFields.add(costSaleOfVAT);
 
         netMargin = new JTextField("");
-        netMargin.addActionListener(new NetMargListener());
+        netMargin.addActionListener(new NetMarginListener());
         activeFields.add(netMargin);
 
         delivery = new JTextField("");
@@ -114,7 +114,7 @@ public class MyFrame {
         annotationsPFields.add(costSaleWithoutVAT);
         grossProfitWithoutVAT = new JLabel("Вал без НДС: ");
         annotationsPFields.add(grossProfitWithoutVAT);
-        interestRate = new JLabel("Процентная ставка: ");
+        interestRate = new JLabel("Проценты: ");
         annotationsPFields.add(interestRate);
         netMarginWithoutVAT = new JLabel("Маржинальный доход без НДС: ");
         annotationsPFields.add(netMarginWithoutVAT);
@@ -124,7 +124,7 @@ public class MyFrame {
         annotationsPFields.add(bonusManager);
         profitabilityWithoutVAT = new JLabel("Рентабельность без НДС: ");
         annotationsPFields.add(profitabilityWithoutVAT);
-        markupP = new JLabel("Наценка: ");
+        markupP = new JLabel("Наценка, %: ");
         annotationsPFields.add(markupP);
         frame.getContentPane().add(BorderLayout.EAST, annotationsPFields);
 
@@ -169,9 +169,9 @@ public class MyFrame {
         }
     }
 
-    public class NetMargListener implements ActionListener {
+    public class NetMarginListener implements ActionListener {
         public void actionPerformed(ActionEvent a) {
-            System.out.println("NetMargListener");
+            System.out.println("NetMarginListener");
         }
     }
 
@@ -213,26 +213,35 @@ public class MyFrame {
         double thisNetMargin;
         double thisDelivery = 0;
         double thisInstallation = 0;
-        double thisAddExpenses;
-        double thisDelay;
+        double thisAddExpenses = 0;
+        double thisDelay = 0;
 
         double thisCostSaleWithoutVAT = 0;
-        double thisGrossProfitWithoutVAT;
+        double thisGrossProfitWithoutVAT = 0;
         //interestRate;
-        double thisNetMarginWithoutVAT;
+        double thisNetMarginWithoutVAT = 0;
         double thisVariableCosts;
         double thisBonusManager;
-        //profitabilityWithoutVAT;
+        double thisProfitabilityWithoutVAT;
         double thisMarkupP;
 
-        if (installation != null) {
+        // Расчет "Переменные затраты"
+        if (installation.getText().equals("")) {
+        } else {
             if (isDouble(installation.getText())) {
                 thisInstallation = Double.parseDouble(installation.getText());
             }
         }
-        if (delivery != null) {
+        if (delivery.getText().equals("")) {
+        } else {
             if (isDouble(delivery.getText())) {
                 thisDelivery = Double.parseDouble(delivery.getText());
+            }
+        }
+        if (addExpenses.getText().equals("")) {
+        } else {
+            if (isDouble(addExpenses.getText())) {
+                thisAddExpenses = Double.parseDouble(addExpenses.getText());
             }
         }
         // Нужно дописать ячейку с суммой в отсрочку и использовать ее вместо "Продажа с НДС"
@@ -241,30 +250,71 @@ public class MyFrame {
                 thisDelay = Double.parseDouble(delay.getText());
             }
         }
-        // Расчет "Переменные затраты"
-        thisVariableCosts = thisInstallation + thisDelivery;
+        thisVariableCosts = thisInstallation + thisDelivery + thisAddExpenses + thisDelay;
         variableCosts.setText("Переменные затраты: " + thisVariableCosts);
-        // Проверка "Себистоимость с НДС" на наличие значения,
-        // если есть, то расчет "Себистоимость без НДС"
-        if (costOfVAT != null) {
+
+        // Проверка "Себестоимость с НДС" на наличие значения,
+        // если есть, то расчет "Себестоимость без НДС"
+        // если нет, то проверка значения "Себестоимость без НДС"
+        // если есть, то расчет "Себестоимость с НДС"
+        if (costOfVAT.getText().equals("")) {
+            if (costWithoutVAT.getText().equals("")) {
+            } else  {
+                if (isDouble(costWithoutVAT.getText())) {
+                    thisCostWithoutVAT = Double.parseDouble(costWithoutVAT.getText());
+                    thisCostOfVAT = thisCostWithoutVAT * 1.18;
+                    costOfVAT.setText(Double.toString(thisCostOfVAT));
+                }
+            }
+        } else {
             if (isDouble(costOfVAT.getText())) {
                 thisCostWithoutVAT = Double.parseDouble(costOfVAT.getText()) / 1.18;
                 costWithoutVAT.setText(Double.toString(thisCostWithoutVAT));
-            } else {
-                costOfVAT.setText("Не число");
             }
         }
+
         // Проверка "Продажа с НДС" на наличие значения,
         // если есть, то расчет "Продажа без НДС"
-        if (costSaleOfVAT != null) {
+        if (costSaleOfVAT.getText().equals("")) {
+        } else {
             if (isDouble(costSaleOfVAT.getText())) {
                 thisCostSaleOfVAT = Double.parseDouble(costSaleOfVAT.getText());
                 thisCostSaleWithoutVAT = thisCostSaleOfVAT  / 1.18;
                 costSaleWithoutVAT.setText("Стоимость продажи без НДС: " + thisCostSaleWithoutVAT);
-            } else {
-                costSaleOfVAT.setText("Не число");
             }
         }
+
+        // Расчет "Продажа с НДС" и "Продажа без НДС"
+        // Расчет "Чистая маржа"
+        if (netMargin.getText().equals("")) {
+            if (costSaleOfVAT.getText().equals("")) {
+            } else {
+                if (isDouble(costSaleOfVAT.getText())) {
+                    thisCostSaleOfVAT = Double.parseDouble(costSaleOfVAT.getText());
+                    thisCostSaleWithoutVAT = thisCostSaleOfVAT / 1.18;
+                    costSaleWithoutVAT.setText(Double.toString(thisCostSaleWithoutVAT));
+                    thisNetMargin = (thisCostSaleWithoutVAT - thisCostWithoutVAT -
+                            thisVariableCosts) * .85;
+                    netMargin.setText(Double.toString(thisNetMargin));
+                    // Расчет "Наценка"
+                    thisMarkupP = thisNetMargin / thisCostSaleWithoutVAT;
+                    markupP.setText(Double.toString(thisMarkupP));
+                }
+            }
+        } else {
+            if (isDouble(netMargin.getText())) {
+                thisNetMargin = Double.parseDouble(netMargin.getText());
+                thisCostSaleOfVAT = (thisNetMargin / .85) * 1.18 +
+                        thisCostWithoutVAT * 1.18 + thisVariableCosts * 1.18;
+                thisCostSaleWithoutVAT = thisNetMargin / .85 +
+                        thisCostWithoutVAT + thisVariableCosts;
+                costSaleOfVAT.setText(Double.toString(thisCostSaleOfVAT));
+                // Расчет "Наценка"
+                thisMarkupP = thisNetMargin / thisCostSaleWithoutVAT;
+                markupP.setText(Double.toString(thisMarkupP));
+            }
+        }
+
         // Расчет "Вал без НДС"
         thisGrossProfitWithoutVAT = thisCostSaleWithoutVAT - thisCostWithoutVAT;
         grossProfitWithoutVAT.setText("Вал без НДС: " + thisGrossProfitWithoutVAT);
@@ -277,13 +327,9 @@ public class MyFrame {
         thisBonusManager = thisNetMarginWithoutVAT * 0.15;
         bonusManager.setText("Премия менеджеру: " + thisBonusManager);
 
-        // Расчет "Чистая маржа"
-        thisNetMargin = 5000;
-
-        // Расчет "Наценка"
-        thisMarkupP = thisNetMargin / thisCostSaleWithoutVAT;
-        markupP.setText("Наценка: " + thisMarkupP);
-
+        // Расчет "Рентабельность без НДС"
+        thisProfitabilityWithoutVAT = thisCostSaleWithoutVAT / thisNetMarginWithoutVAT;
+        profitabilityWithoutVAT.setText(Double.toString(thisProfitabilityWithoutVAT));
 
         return 10;
     }
@@ -293,8 +339,8 @@ public class MyFrame {
             Double.parseDouble(s);
         } catch(NumberFormatException e) {
             return false;
-        //} catch(NullPointerException e) {
-        //    return false;
+            //} catch(NullPointerException e) {
+            //    return false;
         }
         // only got here if we didn't return false
         return true;
