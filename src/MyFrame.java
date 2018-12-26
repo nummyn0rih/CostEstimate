@@ -12,6 +12,7 @@ public class MyFrame {
             netMargin, delivery, installation, addExpenses, delay;
     private JTextField costSaleWithoutVAT, grossProfitWithoutVAT, netMarginWithoutVAT,
             variableCosts, bonusManager, profitabilityWithoutVAT, markupP, interestRateSumm, interestRateDay;
+    private JButton buttonToCalculate;
 
     public static void main(String[] args) {
         MyFrame gui = new MyFrame();
@@ -35,7 +36,7 @@ public class MyFrame {
         nameField.add(nameSale);
         JLabel jl0 = new JLabel("Наименование товара");
         nameField.add(jl0);
-        JButton buttonToCalculate = new JButton("Рассчитать");
+        buttonToCalculate = new JButton("Рассчитать");
         buttonToCalculate.addActionListener(new ButtonToCalculate());
         nameField.add(buttonToCalculate);
         frame.getContentPane().add(BorderLayout.NORTH, nameField);
@@ -85,7 +86,6 @@ public class MyFrame {
         JLabel jl8 = new JLabel("Дополнительные затраты");
         activeFields.add(jl8);
         delay = new JTextField("");
-        delay.addActionListener(new DelayListener());
         delay.setEditable(false);
         activeFields.add(delay);
         JLabel jl9 = new JLabel("Отрочка");
@@ -149,61 +149,55 @@ public class MyFrame {
 
     class WriteNameSaleListener implements ActionListener {
         public void actionPerformed(ActionEvent a) {
-            calculate();
+            number.requestFocus();
         }
     }
 
     public class NumberListener implements ActionListener {
         public void actionPerformed(ActionEvent a) {
-            calculate();
+            costOfVAT.requestFocus();
         }
     }
 
     public class CostOfVATListener implements ActionListener {
         public void actionPerformed(ActionEvent a) {
-            calculate();
+            costWithoutVAT.requestFocus();
         }
     }
 
     public class CostWithoutVATListener implements ActionListener {
         public void actionPerformed(ActionEvent a) {
-            calculate();
+            costSaleOfVAT.requestFocus();
         }
     }
 
     public class CostSaleOfVATListener implements ActionListener {
         public void actionPerformed(ActionEvent a) {
-            calculate();
+            netMargin.requestFocus();
         }
     }
 
     public class NetMarginListener implements ActionListener {
         public void actionPerformed(ActionEvent a) {
-            calculate();
+            delivery.requestFocus();
         }
     }
 
     public class DeliveryListener implements ActionListener {
         public void actionPerformed(ActionEvent a) {
-            calculate();
+            installation.requestFocus();
         }
     }
 
     public class InstallationListener implements ActionListener {
         public void actionPerformed(ActionEvent a) {
-            calculate();
+            addExpenses.requestFocus();
         }
     }
 
     public class AddExpensesListener implements ActionListener {
         public void actionPerformed(ActionEvent a) {
-            calculate();
-        }
-    }
-
-    public class DelayListener implements ActionListener {
-        public void actionPerformed(ActionEvent a) {
-            calculate();
+            buttonToCalculate.requestFocus();
         }
     }
 
