@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/CostEstimate.iml" filepath="$PROJECT_DIR$/CostEstimate.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Margin calculator.iml" filepath="$PROJECT_DIR$/Margin calculator.iml" />
     </modules>
   </component>
 </project>
